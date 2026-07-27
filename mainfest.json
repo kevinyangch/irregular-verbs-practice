@@ -1,7 +1,7 @@
 {
   "name": "Irregular Verbs 練習",
   "short_name": "Irregular Verbs",
-  "start_url": "./index.html",
+  "start_url": "/irregular-verbs-practice/index.html",
   "display": "standalone",
   "background_color": "#f5f5f5",
   "theme_color": "#2563eb",
