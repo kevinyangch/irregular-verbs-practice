@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>Irregular Verbs 單字練習（單題版）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 讓 iOS / Android 知道這可以當 Web App 全螢幕執行 -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <!-- PWA manifest，提供圖示與 display: standalone -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- App 圖示（iOS 會用） -->
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <h1>Irregular Verbs 單字練習</h1>
+  <div class="subtitle">
+    每次隨機顯示一個原形動詞，按「顯示三態」看答案，「確認發音」聽發音，「下一題」換另一個單字。
+  </div>
+
+  <div class="card">
+    <div id="wordBase" class="word-base">—</div>
+    <div id="wordMeaning" class="word-meaning">請按「下一題」開始練習。</div>
+
+    <div id="forms" class="forms"></div>
+
+    <div class="buttons">
+      <button class="btn-secondary" id="btnSpeak">確認發音（BASE）</button>
+      <button class="btn-primary" id="btnShowForms">顯示三態</button>
+      <button class="btn-outline" id="btnNext">下一題</button>
+    </div>
+
+    <div class="info">
+      小提示：可先猜出過去式、過去分詞，再按「顯示三態」核對。<br />
+      發音功能使用瀏覽器內建的 Web Speech API，手機上建議用 Chrome 或 Safari 測試。
+    </div>
+  </div>
+</body>
+</html>
