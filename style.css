@@ -11,25 +11,12 @@ h1 {
 
 .subtitle {
   color: #555;
-  margin-bottom: 16px;
-}
-
-.mode-toggle {
-  margin-bottom: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-}
-
-.mode-toggle label {
-  font-size: 14px;
-  color: #374151;
+  margin-bottom: 20px;
 }
 
 .card {
   max-width: 480px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -92,6 +79,26 @@ button {
   background: #fff;
   color: #374151;
   border: 1px solid #d1d5db;
+}
+
+.options {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.option-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
 }
 
 .info {

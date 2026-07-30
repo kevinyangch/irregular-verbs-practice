@@ -5,7 +5,7 @@
   <title>Irregular Verbs 單字練習（單題版）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- PWA / Web App 設定 -->
+  <!-- PWA / Web App 設定（Android / iOS，全螢幕） -->
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="manifest.json" />
@@ -15,63 +15,43 @@
   <script src="main.js" defer></script>
 </head>
 <body>
-  <h1>Irregular Verbs 單字練習</h1>
+  <h1>Irregular Verbs 與比較級練習</h1>
   <div class="subtitle">
-    每次隨機顯示一個原形動詞，按「顯示三態」看答案（並自動念出三態），
-    「確認發音（Base）」聽原形發音，「下一題」換另一個單字。
+    每次隨機顯示一個原形（動詞或形容詞），按「確認發音(原形)」聽原形發音，
+    按「顯示三態/比較級」看完整變化，再按「下一題」換題目。
   </div>
 
-  <!-- 模式切換區：三態 vs 比較級 -->
-  <div class="mode-toggle">
-    <label>
-      <input type="checkbox" id="chkVerbs" checked />
-      顯示動詞三態練習
-    </label>
-    <label>
-      <input type="checkbox" id="chkComparatives" />
-      顯示形容詞比較級練習
-    </label>
-  </div>
-
-  <!-- 動詞三態練習卡片 -->
-  <div class="card" id="verbsCard">
+  <div class="card">
     <div id="wordBase" class="word-base">—</div>
-    <div id="wordMeaning" class="word-meaning">請按「下一題」開始練習動詞三態。</div>
+    <div id="wordMeaning" class="word-meaning">請勾選題目範圍後，按「下一題」開始練習。</div>
 
     <div id="forms" class="forms"></div>
 
     <div class="buttons">
-      <button class="btn-primary" id="btnShowForms">顯示三態（並念出三態）</button>
-      <button class="btn-secondary" id="btnSpeak">確認發音（Base）</button>
+      <!-- 第一個按鈕：確認發音(原形) -->
+      <button class="btn-primary" id="btnSpeakBase">確認發音(原形)</button>
+      <!-- 第二個按鈕：顯示三態 / 比較級 -->
+      <button class="btn-secondary" id="btnShowForms">顯示三態／比較級</button>
+      <!-- 第三個按鈕：下一題 -->
       <button class="btn-outline" id="btnNext">下一題</button>
     </div>
 
-    <div class="info">
-      小提示：可先猜出過去式、過去分詞，再按「顯示三態」核對；也可用發音按鈕單獨練 Base。
-    </div>
-  </div>
+    <div class="options">
+      <label class="option-item">
+        <input type="checkbox" id="optVerbs" checked />
+        包含不規則動詞三態題目
+      </label>
 
-  <!-- 比較級練習卡片 -->
-  <div class="card" id="comparativesCard" style="display:none;">
-    <div class="subtitle">
-      形容詞比較級練習：每次隨機顯示一個原級，按「顯示比較級」看答案（並念出一組），
-      「下一題」換另一個形容詞。
-    </div>
-
-    <div id="adjBase" class="word-base">—</div>
-    <div id="adjMeaning" class="word-meaning">請按「下一題」開始練習比較級。</div>
-
-    <div id="adjForms" class="forms"></div>
-
-    <div class="buttons">
-      <button class="btn-primary" id="btnShowAdjComparative">顯示比較級（並念出原級＋比較級）</button>
-      <button class="btn-secondary" id="btnSpeakAdjBase">確認發音（原級）</button>
-      <button class="btn-outline" id="btnNextAdj">下一題</button>
+      <label class="option-item">
+        <input type="checkbox" id="optComparatives" checked />
+        包含形容詞比較級題目
+      </label>
     </div>
 
     <div class="info">
-      範圍：fast → faster, big → bigger, happy → happier, interesting → more interesting,<br />
-      slow → slower, hot → hotter, easy → easier, expensive → more expensive。
+      小提示：<br />
+      勾選哪一種題目，就會從那一類的題庫隨機出題。<br />
+      「確認發音(原形)」只念 Base，「顯示三態／比較級」會顯示變化並自動念完整形式。
     </div>
   </div>
 </body>
