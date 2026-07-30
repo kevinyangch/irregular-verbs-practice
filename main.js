@@ -46,7 +46,7 @@ const comparatives = [
 let currentIndex = null;
 let currentType = null; // "verb" 或 "comp"
 
-// 隨機題目類型（依 checkbox）
+// 依 checkbox 選擇題目類型
 function pickRandomType() {
   const useVerbs = document.getElementById("optVerbs").checked;
   const useComps = document.getElementById("optComparatives").checked;
@@ -56,7 +56,7 @@ function pickRandomType() {
   if (useComps) types.push("comp");
 
   if (types.length === 0) {
-    // 如果兩個都沒勾選，預設用 verbs
+    // 若都沒勾選，預設用 verbs
     return "verb";
   }
 
@@ -94,7 +94,7 @@ function nextWord() {
 
   if (currentType === "verb") {
     let newIndex = randomIndex(verbs.length);
-    if (currentIndex !== null && verbs.length > 1 && currentType === "verb") {
+    if (currentIndex !== null && verbs.length > 1) {
       while (newIndex === currentIndex) {
         newIndex = randomIndex(verbs.length);
       }
@@ -102,7 +102,7 @@ function nextWord() {
     currentIndex = newIndex;
   } else if (currentType === "comp") {
     let newIndex = randomIndex(comparatives.length);
-    if (currentIndex !== null && comparatives.length > 1 && currentType === "comp") {
+    if (currentIndex !== null && comparatives.length > 1) {
       while (newIndex === currentIndex) {
         newIndex = randomIndex(comparatives.length);
       }
@@ -200,13 +200,30 @@ function speakComparativeForms() {
 
 window.addEventListener("load", () => {
   // 按鈕事件
-  document.getElementById("btnSpeakBase").addEventListener("click", speakBase);
-  document.getElementById("btnShowForms").addEventListener("click", showForms);
-  document.getElementById("btnNext").addEventListener("click", nextWord);
+  const btnSpeakBase = document.getElementById("btnSpeakBase");
+  const btnShowForms = document.getElementById("btnShowForms");
+  const btnNext = document.getElementById("btnNext");
 
-  // 勾選題目範圍變更時，建議重新出題
-  document.getElementById("optVerbs").addEventListener("change", nextWord);
-  document.getElementById("optComparatives").addEventListener("change", nextWord);
+  if (btnSpeakBase) {
+    btnSpeakBase.addEventListener("click", speakBase);
+  }
+  if (btnShowForms) {
+    btnShowForms.addEventListener("click", showForms);
+  }
+  if (btnNext) {
+    btnNext.addEventListener("click", nextWord);
+  }
+
+  // 題目範圍變更時，重新出題
+  const optVerbs = document.getElementById("optVerbs");
+  const optComparatives = document.getElementById("optComparatives");
+
+  if (optVerbs) {
+    optVerbs.addEventListener("change", nextWord);
+  }
+  if (optComparatives) {
+    optComparatives.addEventListener("change", nextWord);
+  }
 
   // 初次載入先出一題
   nextWord();
