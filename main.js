@@ -1,4 +1,4 @@
-// 題庫：不規則動詞三態 + 中文
+// 題庫：動詞三態 + 中文
 const verbs = [
   { base: "hold", past: "held", pp: "held", zh: "抓住；保持" },
   { base: "keep", past: "kept", pp: "kept", zh: "保持；保有" },
@@ -56,7 +56,7 @@ function pickRandomType() {
   if (useComps) types.push("comp");
 
   if (types.length === 0) {
-    // 若都沒勾選，預設用 verbs
+    // 若都沒勾選，預設用三態
     return "verb";
   }
 
@@ -162,7 +162,7 @@ function speakBase() {
   window.speechSynthesis.speak(u);
 }
 
-// 不規則動詞：念 Base, Past, PP
+// 三態：念 Base, Past, PP
 function speakVerbForms() {
   if (currentIndex === null || currentType !== "verb") return;
   if (!("speechSynthesis" in window)) return;

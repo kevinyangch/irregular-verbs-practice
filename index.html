@@ -2,9 +2,10 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>Irregular Verbs 單字練習（單題版）</title>
+  <title>三態與比較級練習（單題版）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- PWA / Web App 設定（Android / iOS，全螢幕） -->
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="manifest.json" />
@@ -14,15 +15,17 @@
   <script src="main.js" defer></script>
 </head>
 <body>
-  <h1>Irregular Verbs 與比較級練習</h1>
+  <h1>三態與比較級練習</h1>
   <div class="subtitle">
-    每次隨機顯示一個原形（動詞或形容詞），按「確認發音(原形)」聽原形發音，
-    按「顯示三態/比較級」看完整變化，再按「下一題」換題目。
+    每次隨機顯示一個原形（動詞三態或形容詞比較級），按「確認發音(原形)」聽原形發音，
+    按「顯示三態／比較級」看完整變化，再按「下一題」換題目。
   </div>
 
   <div class="card">
     <div id="wordBase" class="word-base">—</div>
-    <div id="wordMeaning" class="word-meaning">請勾選題目範圍後，按「下一題」開始練習。</div>
+    <div id="wordMeaning" class="word-meaning">
+      請勾選題目範圍後，按「下一題」開始練習。
+    </div>
 
     <div id="forms" class="forms"></div>
 
@@ -38,7 +41,7 @@
     <div class="options">
       <label class="option-item">
         <input type="checkbox" id="optVerbs" checked />
-        包含不規則動詞三態題目
+        包含三態題目
       </label>
 
       <label class="option-item">
