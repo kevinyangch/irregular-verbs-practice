@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>三態與比較級練習（單題版）</title>
+  <title>三態與比較級練習（分類版）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- PWA / Web App 設定（Android / iOS，全螢幕） -->
@@ -17,8 +17,8 @@
 <body>
   <h1>三態與比較級練習</h1>
   <div class="subtitle">
-    每次隨機顯示一個原形（動詞三態或形容詞比較級），按「確認發音(原形)」聽原形發音，
-    按「顯示三態／比較級」看完整變化，再按「下一題」換題目。
+    勾選 AAA／ABA／ABB／比較級四種題目範圍，每次隨機顯示一個原形，
+    按「確認發音(原形)」聽原形，按「顯示三態／比較級」看完整變化，再按「下一題」換題目。
   </div>
 
   <div class="card">
@@ -40,20 +40,30 @@
 
     <div class="options">
       <label class="option-item">
-        <input type="checkbox" id="optVerbs" checked />
-        包含三態題目
+        <input type="checkbox" id="optAAA" checked />
+        AAA 三態同型（cost–cost–cost）
+      </label>
+
+      <label class="option-item">
+        <input type="checkbox" id="optABA" checked />
+        ABA 原型與過去分詞同型（come–came–come）
+      </label>
+
+      <label class="option-item">
+        <input type="checkbox" id="optABB" checked />
+        ABB 過去式與過去分詞同型（build–built–built）
       </label>
 
       <label class="option-item">
         <input type="checkbox" id="optComparatives" checked />
-        包含形容詞比較級題目
+        形容詞比較級題目
       </label>
     </div>
 
     <div class="info">
       小提示：<br />
-      勾選哪一種題目，就會從那一類的題庫隨機出題。<br />
-      「確認發音(原形)」只念 Base，「顯示三態／比較級」會顯示變化並自動念完整形式。
+      勾選哪一類，就會從該類題庫隨機出題。<br />
+      之後我們可以在這個版本上加「弱點單字權重」，讓你常錯的單字多出現。
     </div>
   </div>
 </body>
