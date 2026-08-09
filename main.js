@@ -46,6 +46,35 @@ const comparatives = [
 let currentIndex = null;
 let currentType = null; // "verb" 或 "comp"
 
+// 每種類型的洗牌索引 queue
+let verbQueue = [];
+let compQueue = [];
+
+// Fisher–Yates 洗牌
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// 初始化 queue：0..length-1 然後 shuffle
+function initVerbQueue() {
+  verbQueue = [];
+  for (let i = 0; i < verbs.length; i++) {
+    verbQueue.push(i);
+  }
+  shuffle(verbQueue);
+}
+
+function initCompQueue() {
+  compQueue = [];
+  for (let i = 0; i < comparatives.length; i++) {
+    compQueue.push(i);
+  }
+  shuffle(compQueue);
+}
+
 // 依 checkbox 選擇題目類型
 function pickRandomType() {
   const useVerbs = document.getElementById("optVerbs").checked;
@@ -62,10 +91,6 @@ function pickRandomType() {
 
   const idx = Math.floor(Math.random() * types.length);
   return types[idx];
-}
-
-function randomIndex(max) {
-  return Math.floor(Math.random() * max);
 }
 
 function renderCurrent() {
@@ -93,21 +118,16 @@ function nextWord() {
   currentType = pickRandomType();
 
   if (currentType === "verb") {
-    let newIndex = randomIndex(verbs.length);
-    if (currentIndex !== null && verbs.length > 1) {
-      while (newIndex === currentIndex) {
-        newIndex = randomIndex(verbs.length);
-      }
+    // 如果 queue 用完，重新生成一輪洗牌
+    if (!verbQueue || verbQueue.length === 0) {
+      initVerbQueue();
     }
-    currentIndex = newIndex;
+    currentIndex = verbQueue.shift(); // 依序取出一個索引
   } else if (currentType === "comp") {
-    let newIndex = randomIndex(comparatives.length);
-    if (currentIndex !== null && comparatives.length > 1) {
-      while (newIndex === currentIndex) {
-        newIndex = randomIndex(comparatives.length);
-      }
+    if (!compQueue || compQueue.length === 0) {
+      initCompQueue();
     }
-    currentIndex = newIndex;
+    currentIndex = compQueue.shift();
   } else {
     currentIndex = null;
   }
@@ -199,6 +219,10 @@ function speakComparativeForms() {
 }
 
 window.addEventListener("load", () => {
+  // 初始化 queue
+  initVerbQueue();
+  initCompQueue();
+
   // 按鈕事件
   const btnSpeakBase = document.getElementById("btnSpeakBase");
   const btnShowForms = document.getElementById("btnShowForms");
@@ -214,7 +238,7 @@ window.addEventListener("load", () => {
     btnNext.addEventListener("click", nextWord);
   }
 
-  // 題目範圍變更時，重新出題
+  // 題目範圍變更時，重新出題（但保留各自 queue，除非用完）
   const optVerbs = document.getElementById("optVerbs");
   const optComparatives = document.getElementById("optComparatives");
 
