@@ -1,46 +1,40 @@
-// 題庫：AAA 三態同型
-const verbsAAA = [
+const STORAGE_KEY = "verb-practice-weakness-v1";
+const MAX_WEIGHT = 5;
+const RECENT_LIMIT = 3;
+
+// AAA：Base = Past = PP
+const aaaVerbs = [
+  { base: "bet", past: "bet", pp: "bet", zh: "打賭" },
+  { base: "burst", past: "burst", pp: "burst", zh: "爆裂" },
   { base: "cost", past: "cost", pp: "cost", zh: "花費" },
-  { base: "cut", past: "cut", pp: "cut", zh: "切割" },
-  { base: "fit", past: "fit", pp: "fit", zh: "合身" },
-  { base: "hit", past: "hit", pp: "hit", zh: "碰撞" },
-  { base: "hurt", past: "hurt", pp: "hurt", zh: "傷害" },
-  { base: "let", past: "let", pp: "let", zh: "讓" },
-  { base: "put", past: "put", pp: "put", zh: "放置" },
-  { base: "quit", past: "quit", pp: "quit", zh: "放棄" },
-  { base: "read", past: "read", pp: "read", zh: "閱讀" }, // 發音不同，但字型同
-  { base: "set", past: "set", pp: "set", zh: "擺放" },
-  { base: "shut", past: "shut", pp: "shut", zh: "關閉" },
-  { base: "spread", past: "spread", pp: "spread", zh: "傳開" }
+  { base: "cut", past: "cut", pp: "cut", zh: "切；割" },
+  { base: "hit", past: "hit", pp: "hit", zh: "打；撞擊" },
+  { base: "hurt", past: "hurt", pp: "hurt", zh: "受傷；傷害" },
+  { base: "let", past: "let", pp: "let", zh: "讓；允許" },
+  { base: "put", past: "put", pp: "put", zh: "放" },
+  { base: "read", past: "read", pp: "read", zh: "閱讀" },
+  { base: "set", past: "set", pp: "set", zh: "設定；放置" },
+  { base: "shut", past: "shut", pp: "shut", zh: "關閉" }
 ];
 
-// 題庫：ABA 原型與過去分詞同型
-const verbsABA = [
-  { base: "become", past: "became", pp: "become", zh: "變成" },
+// ABA：Base = PP，Past 不同
+const abaVerbs = [
+  { base: "become", past: "became", pp: "become", zh: "成為" },
   { base: "come", past: "came", pp: "come", zh: "來" },
-  { base: "run", past: "ran", pp: "run", zh: "跑步" }
+  { base: "overcome", past: "overcame", pp: "overcome", zh: "克服" },
+  { base: "run", past: "ran", pp: "run", zh: "跑" }
 ];
 
-// 題庫：ABB 過去式與過去分詞同型
-const verbsABB = [
-  { base: "bend", past: "bent", pp: "bent", zh: "彎曲" },
-  { base: "bring", past: "brought", pp: "brought", zh: "帶來" },
-  { base: "build", past: "built", pp: "built", zh: "建築；建造" },
-  { base: "burn", past: "burnt", pp: "burnt", zh: "燃燒；燒焦" },
+// ABB：Past = PP，Base 不同
+const abbVerbs = [
+  { base: "build", past: "built", pp: "built", zh: "建造" },
   { base: "buy", past: "bought", pp: "bought", zh: "買" },
-  { base: "catch", past: "caught", pp: "caught", zh: "抓到；接到" },
-  { base: "deal", past: "dealt", pp: "dealt", zh: "處理" },
-  { base: "dig", past: "dug", pp: "dug", zh: "挖" },
-  { base: "dive", past: "dove", pp: "dove", zh: "潛水" },
-  { base: "feed", past: "fed", pp: "fed", zh: "餵" },
+  { base: "catch", past: "caught", pp: "caught", zh: "抓住" },
+  { base: "deal", past: "dealt", pp: "dealt", zh: "處理；交易" },
   { base: "feel", past: "felt", pp: "felt", zh: "感覺" },
-  { base: "fight", past: "fought", pp: "fought", zh: "打仗；打架" },
   { base: "find", past: "found", pp: "found", zh: "找到" },
-  { base: "get", past: "got", pp: "got", zh: "得到" },
-  { base: "hang", past: "hung", pp: "hung", zh: "懸掛" },
-  { base: "hang", past: "hanged", pp: "hanged", zh: "吊死" },
-  { base: "have", past: "had", pp: "had", zh: "有；吃" },
-  { base: "hear", past: "heard", pp: "heard", zh: "聽到" },
+  { base: "have", past: "had", pp: "had", zh: "有" },
+  { base: "hear", past: "heard", pp: "heard", zh: "聽見" },
   { base: "hold", past: "held", pp: "held", zh: "抓住；保持" },
   { base: "keep", past: "kept", pp: "kept", zh: "保持；保有" },
   { base: "lead", past: "led", pp: "led", zh: "帶領；領導" },
@@ -55,9 +49,6 @@ const verbsABB = [
   { base: "say", past: "said", pp: "said", zh: "說" },
   { base: "sell", past: "sold", pp: "sold", zh: "賣" },
   { base: "send", past: "sent", pp: "sent", zh: "寄" },
-  { base: "shine", past: "shone", pp: "shone", zh: "照耀；閃光" },
-  { base: "shoot", past: "shot", pp: "shot", zh: "投射；開槍" },
-  { base: "sit", past: "sat", pp: "sat", zh: "坐" },
   { base: "sleep", past: "slept", pp: "slept", zh: "睡覺" },
   { base: "smell", past: "smelt", pp: "smelt", zh: "聞" },
   { base: "spell", past: "spelt", pp: "spelt", zh: "拼字" },
@@ -72,7 +63,41 @@ const verbsABB = [
   { base: "win", past: "won", pp: "won", zh: "贏" }
 ];
 
-// 題庫：形容詞比較級 + 中文
+// ABC(1)：Base、Past、PP 都不同
+const abc1Verbs = [
+  { base: "be", past: "was/were", pp: "been", zh: "是；在" },
+  { base: "begin", past: "began", pp: "begun", zh: "開始" },
+  { base: "break", past: "broke", pp: "broken", zh: "打破" },
+  { base: "choose", past: "chose", pp: "chosen", zh: "選擇" },
+  { base: "do", past: "did", pp: "done", zh: "做" },
+  { base: "draw", past: "drew", pp: "drawn", zh: "畫；拉" },
+  { base: "drink", past: "drank", pp: "drunk", zh: "喝" },
+  { base: "drive", past: "drove", pp: "driven", zh: "駕駛" },
+  { base: "eat", past: "ate", pp: "eaten", zh: "吃" },
+  { base: "fall", past: "fell", pp: "fallen", zh: "跌倒；落下" },
+  { base: "fly", past: "flew", pp: "flown", zh: "飛" },
+  { base: "forget", past: "forgot", pp: "forgotten", zh: "忘記" },
+  { base: "forgive", past: "forgave", pp: "forgiven", zh: "原諒" },
+  { base: "freeze", past: "froze", pp: "frozen", zh: "結冰" },
+  { base: "give", past: "gave", pp: "given", zh: "給" },
+  { base: "go", past: "went", pp: "gone", zh: "去" },
+  { base: "grow", past: "grew", pp: "grown", zh: "成長；種植" },
+  { base: "know", past: "knew", pp: "known", zh: "知道；認識" },
+  { base: "ride", past: "rode", pp: "ridden", zh: "騎" },
+  { base: "ring", past: "rang", pp: "rung", zh: "響鈴；打電話" },
+  { base: "rise", past: "rose", pp: "risen", zh: "上升；起床" },
+  { base: "see", past: "saw", pp: "seen", zh: "看見" },
+  { base: "sing", past: "sang", pp: "sung", zh: "唱歌" },
+  { base: "speak", past: "spoke", pp: "spoken", zh: "說話" },
+  { base: "steal", past: "stole", pp: "stolen", zh: "偷" },
+  { base: "swim", past: "swam", pp: "swum", zh: "游泳" },
+  { base: "take", past: "took", pp: "taken", zh: "拿；帶" },
+  { base: "throw", past: "threw", pp: "thrown", zh: "丟；投擲" },
+  { base: "wear", past: "wore", pp: "worn", zh: "穿著" },
+  { base: "write", past: "wrote", pp: "written", zh: "寫" }
+];
+
+// 比較級
 const comparatives = [
   { base: "fast", comp: "faster", zh: "快的 → 更快的" },
   { base: "big", comp: "bigger", zh: "大的 → 更大的" },
@@ -84,243 +109,408 @@ const comparatives = [
   { base: "expensive", comp: "more expensive", zh: "昂貴的 → 更昂貴的" }
 ];
 
-let currentIndex = null;
-let currentType = null; // "AAA" / "ABA" / "ABB" / "comp"
-
-// 最近題目避免重複
-const recentIndices = {
-  AAA: [],
-  ABA: [],
-  ABB: [],
-  comp: []
+const questionBanks = {
+  aaa: aaaVerbs,
+  aba: abaVerbs,
+  abb: abbVerbs,
+  abc1: abc1Verbs,
+  comp: comparatives
 };
-const RECENT_LIMIT = 3;
 
-function randomIndex(max) {
-  return Math.floor(Math.random() * max);
+const checkboxMap = {
+  aaa: "optAAA",
+  aba: "optABA",
+  abb: "optABB",
+  abc1: "optABC1",
+  comp: "optComparatives"
+};
+
+let currentQuestion = null;
+let currentType = null;
+let roundMode = "coverage";
+let coverageQueue = [];
+let recentQuestionIds = [];
+let weaknessData = loadWeaknessData();
+
+function getQuestionId(type, item) {
+  return `${type}:${item.base.toLowerCase()}`;
 }
 
-// 根據 checkbox 選題型
-function pickRandomType() {
-  const useAAA = document.getElementById("optAAA").checked;
-  const useABA = document.getElementById("optABA").checked;
-  const useABB = document.getElementById("optABB").checked;
-  const useComp = document.getElementById("optComparatives").checked;
+function loadWeaknessData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : {};
+  } catch (error) {
+    return {};
+  }
+}
 
-  const types = [];
-  if (useAAA) types.push("AAA");
-  if (useABA) types.push("ABA");
-  if (useABB) types.push("ABB");
-  if (useComp) types.push("comp");
+function saveWeaknessData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(weaknessData));
+  } catch (error) {
+    console.warn("無法儲存弱點資料。", error);
+  }
+}
 
-  if (types.length === 0) {
-    // 若全部沒勾選，預設 AAA
-    return "AAA";
+function getWeight(type, item) {
+  const id = getQuestionId(type, item);
+  const value = Number(weaknessData[id] || 1);
+  return Math.min(Math.max(value, 1), MAX_WEIGHT);
+}
+
+function setWeight(type, item, weight) {
+  const id = getQuestionId(type, item);
+  const safeWeight = Math.min(Math.max(weight, 1), MAX_WEIGHT);
+
+  if (safeWeight <= 1) {
+    delete weaknessData[id];
+  } else {
+    weaknessData[id] = safeWeight;
   }
 
-  const idx = Math.floor(Math.random() * types.length);
-  return types[idx];
+  saveWeaknessData();
+  updateWeakStatus();
 }
 
-// 避免連續重複的選題（非加權版本）
-function pickIndexAvoidRecent(list, typeKey) {
-  const recent = recentIndices[typeKey] || [];
-  const candidates = [];
+function countWeakQuestions() {
+  return Object.values(weaknessData).filter((weight) => Number(weight) > 1).length;
+}
 
-  for (let i = 0; i < list.length; i++) {
-    if (!recent.includes(i)) {
-      candidates.push(i);
+function getSelectedTypes() {
+  return Object.entries(checkboxMap)
+    .filter(([, checkboxId]) => {
+      const checkbox = document.getElementById(checkboxId);
+      return checkbox && checkbox.checked;
+    })
+    .map(([type]) => type);
+}
+
+function createCoverageQueue() {
+  const selectedTypes = getSelectedTypes();
+  const queue = [];
+
+  selectedTypes.forEach((type) => {
+    questionBanks[type].forEach((item, index) => {
+      queue.push({ type, index });
+    });
+  });
+
+  return shuffle(queue);
+}
+
+function shuffle(array) {
+  const copy = [...array];
+
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  return copy;
+}
+
+function getAllSelectedQuestions() {
+  const selectedTypes = getSelectedTypes();
+  const questions = [];
+
+  selectedTypes.forEach((type) => {
+    questionBanks[type].forEach((item, index) => {
+      questions.push({ type, index, item });
+    });
+  });
+
+  return questions;
+}
+
+function isRecent(question) {
+  const id = getQuestionId(question.type, question.item);
+  return recentQuestionIds.includes(id);
+}
+
+function updateRecentQuestions(question) {
+  const id = getQuestionId(question.type, question.item);
+
+  recentQuestionIds = recentQuestionIds.filter((questionId) => questionId !== id);
+  recentQuestionIds.push(id);
+
+  while (recentQuestionIds.length > RECENT_LIMIT) {
+    recentQuestionIds.shift();
+  }
+}
+
+function chooseWeightedReviewQuestion() {
+  const allQuestions = getAllSelectedQuestions();
+
+  if (allQuestions.length === 0) {
+    return null;
+  }
+
+  let candidates = allQuestions.filter((question) => !isRecent(question));
+
+  if (candidates.length === 0) {
+    candidates = allQuestions;
+  }
+
+  const totalWeight = candidates.reduce((sum, question) => {
+    return sum + getWeight(question.type, question.item);
+  }, 0);
+
+  let randomValue = Math.random() * totalWeight;
+
+  for (const question of candidates) {
+    randomValue -= getWeight(question.type, question.item);
+
+    if (randomValue < 0) {
+      return question;
     }
   }
 
-  if (candidates.length === 0) {
-    // 全部都在 recent 裡，清空緩衝再選
-    recentIndices[typeKey] = [];
-    return randomIndex(list.length);
-  }
-
-  const r = Math.floor(Math.random() * candidates.length);
-  const chosen = candidates[r];
-
-  recent.push(chosen);
-  while (recent.length > RECENT_LIMIT) {
-    recent.shift();
-  }
-  recentIndices[typeKey] = recent;
-
-  return chosen;
+  return candidates[candidates.length - 1];
 }
 
-function renderCurrent() {
+function resetLearningRound(showMessage = false) {
+  coverageQueue = createCoverageQueue();
+  roundMode = "coverage";
+  recentQuestionIds = [];
+
+  if (showMessage) {
+    setFeedback("已依目前勾選範圍建立新的完整學習輪。", "info");
+  }
+
+  updateRoundStatus();
+}
+
+function updateRoundStatus() {
+  const statusEl = document.getElementById("roundStatus");
+
+  if (!statusEl) {
+    return;
+  }
+
+  if (roundMode === "coverage") {
+    statusEl.textContent = `完整學習輪：剩餘 ${coverageQueue.length} 題`;
+  } else {
+    statusEl.textContent = "弱點加強複習中";
+  }
+}
+
+function updateWeakStatus() {
+  const weakStatusEl = document.getElementById("weakStatus");
+
+  if (!weakStatusEl) {
+    return;
+  }
+
+  weakStatusEl.textContent = `弱點題：${countWeakQuestions()}`;
+}
+
+function setFeedback(message = "", type = "") {
+  const feedbackEl = document.getElementById("feedback");
+
+  if (!feedbackEl) {
+    return;
+  }
+
+  feedbackEl.textContent = message;
+  feedbackEl.className = "feedback";
+
+  if (type) {
+    feedbackEl.classList.add(type);
+  }
+}
+
+function renderCurrentQuestion() {
   const baseEl = document.getElementById("wordBase");
   const meaningEl = document.getElementById("wordMeaning");
   const formsEl = document.getElementById("forms");
 
-  let item = null;
-
-  if (currentType === "AAA") {
-    item = verbsAAA[currentIndex];
-  } else if (currentType === "ABA") {
-    item = verbsABA[currentIndex];
-  } else if (currentType === "ABB") {
-    item = verbsABB[currentIndex];
-  } else if (currentType === "comp") {
-    item = comparatives[currentIndex];
-  }
-
-  if (!item) {
+  if (!currentQuestion || !currentType) {
     baseEl.textContent = "—";
-    meaningEl.textContent = "請勾選題目範圍後，按「下一題」開始練習。";
+    meaningEl.textContent = "請至少勾選一個題目範圍。";
     formsEl.textContent = "";
     return;
   }
 
-  baseEl.textContent = item.base;
-  meaningEl.textContent =
-    currentType === "comp" ? item.zh : item.zh;
+  baseEl.textContent = currentQuestion.base;
+  meaningEl.textContent = currentQuestion.zh;
   formsEl.textContent = "";
 }
 
-function nextWord() {
-  currentType = pickRandomType();
+function nextQuestion() {
+  const selectedTypes = getSelectedTypes();
 
-  if (currentType === "AAA") {
-    currentIndex = pickIndexAvoidRecent(verbsAAA, "AAA");
-  } else if (currentType === "ABA") {
-    currentIndex = pickIndexAvoidRecent(verbsABA, "ABA");
-  } else if (currentType === "ABB") {
-    currentIndex = pickIndexAvoidRecent(verbsABB, "ABB");
-  } else if (currentType === "comp") {
-    currentIndex = pickIndexAvoidRecent(comparatives, "comp");
-  } else {
-    currentIndex = null;
-  }
-
-  renderCurrent();
-}
-
-// 顯示三態／比較級 + 自動念完整形式
-function showForms() {
-  if (currentIndex === null || !currentType) return;
-  const formsDiv = document.getElementById("forms");
-
-  if (currentType === "AAA") {
-    const v = verbsAAA[currentIndex];
-    formsDiv.innerHTML = `
-      <span><strong>Base</strong>: ${v.base}</span>
-      <span><strong>Past</strong>: ${v.past}</span>
-      <span><strong>PP</strong>: ${v.pp}</span>
-    `;
-    speakVerbForms(v);
-  } else if (currentType === "ABA") {
-    const v = verbsABA[currentIndex];
-    formsDiv.innerHTML = `
-      <span><strong>Base</strong>: ${v.base}</span>
-      <span><strong>Past</strong>: ${v.past}</span>
-      <span><strong>PP</strong>: ${v.pp}</span>
-    `;
-    speakVerbForms(v);
-  } else if (currentType === "ABB") {
-    const v = verbsABB[currentIndex];
-    formsDiv.innerHTML = `
-      <span><strong>Base</strong>: ${v.base}</span>
-      <span><strong>Past</strong>: ${v.past}</span>
-      <span><strong>PP</strong>: ${v.pp}</span>
-    `;
-    speakVerbForms(v);
-  } else if (currentType === "comp") {
-    const a = comparatives[currentIndex];
-    formsDiv.innerHTML = `
-      <span><strong>Base</strong>: ${a.base}</span>
-      <span><strong>Comparative</strong>: ${a.comp}</span>
-    `;
-    speakComparativeForms(a);
-  }
-}
-
-// 確認發音(原形)：只念 Base
-function speakBase() {
-  if (currentIndex === null || !currentType) return;
-
-  if (!("speechSynthesis" in window)) {
-    alert("此瀏覽器不支援語音合成（Web Speech API）。請換用 Chrome 或 Safari 測試。");
+  if (selectedTypes.length === 0) {
+    currentQuestion = null;
+    currentType = null;
+    renderCurrentQuestion();
+    updateRoundStatus();
+    setFeedback("請至少勾選一個題目範圍。", "warning");
     return;
   }
 
-  let base = "";
+  let selectedQuestion = null;
 
-  if (currentType === "AAA") {
-    base = verbsAAA[currentIndex].base;
-  } else if (currentType === "ABA") {
-    base = verbsABA[currentIndex].base;
-  } else if (currentType === "ABB") {
-    base = verbsABB[currentIndex].base;
-  } else if (currentType === "comp") {
-    base = comparatives[currentIndex].base;
+  if (roundMode === "coverage") {
+    if (coverageQueue.length === 0) {
+      roundMode = "review";
+      setFeedback("已完成完整學習輪，現在進入弱點加強複習。", "success");
+    } else {
+      const next = coverageQueue.shift();
+
+      selectedQuestion = {
+        type: next.type,
+        index: next.index,
+        item: questionBanks[next.type][next.index]
+      };
+    }
   }
 
-  const u = new SpeechSynthesisUtterance();
-  u.lang = "en-US";
-  u.text = base;
-  u.rate = 0.9;
-  u.pitch = 1.0;
+  if (!selectedQuestion) {
+    selectedQuestion = chooseWeightedReviewQuestion();
+  }
 
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
+  if (!selectedQuestion) {
+    return;
+  }
+
+  currentType = selectedQuestion.type;
+  currentQuestion = selectedQuestion.item;
+
+  updateRecentQuestions(selectedQuestion);
+  renderCurrentQuestion();
+  updateRoundStatus();
+
+  if (roundMode === "coverage" && coverageQueue.length === 0) {
+    setFeedback("這是完整學習輪的最後一題。下一題將進入弱點加強複習。", "info");
+  } else if (roundMode === "review") {
+    const weight = getWeight(currentType, currentQuestion);
+
+    if (weight > 1) {
+      setFeedback(`目前是弱點加強複習；此題權重為 ${weight}。`, "warning");
+    } else {
+      setFeedback("目前是弱點加強複習。", "info");
+    }
+  }
 }
 
-// 三態：念 Base, Past, PP
-function speakVerbForms(v) {
-  if (!v) return;
-  if (!("speechSynthesis" in window)) return;
+function showForms() {
+  if (!currentQuestion || !currentType) {
+    return;
+  }
 
-  const text = `${v.base}, ${v.past}, ${v.pp}`;
+  const formsEl = document.getElementById("forms");
 
-  const u = new SpeechSynthesisUtterance();
-  u.lang = "en-US";
-  u.text = text;
-  u.rate = 0.9;
-  u.pitch = 1.0;
+  if (currentType === "comp") {
+    formsEl.innerHTML = `
+      <span><strong>原形</strong>：${currentQuestion.base}</span>
+      <span><strong>比較級</strong>：${currentQuestion.comp}</span>
+    `;
 
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
+    speakText(`${currentQuestion.base}, ${currentQuestion.comp}`);
+    return;
+  }
+
+  formsEl.innerHTML = `
+    <span><strong>原形</strong>：${currentQuestion.base}</span>
+    <span><strong>過去式</strong>：${currentQuestion.past}</span>
+    <span><strong>過去分詞</strong>：${currentQuestion.pp}</span>
+  `;
+
+  speakText(`${currentQuestion.base}, ${currentQuestion.past}, ${currentQuestion.pp}`);
 }
 
-// 比較級：念 Base, Comparative
-function speakComparativeForms(a) {
-  if (!a) return;
-  if (!("speechSynthesis" in window)) return;
+function speakBase() {
+  if (!currentQuestion) {
+    return;
+  }
 
-  const text = `${a.base}, ${a.comp}`;
+  speakText(currentQuestion.base);
+}
 
-  const u = new SpeechSynthesisUtterance();
-  u.lang = "en-US";
-  u.text = text;
-  u.rate = 0.9;
-  u.pitch = 1.0;
+function speakText(text) {
+  if (!("speechSynthesis" in window)) {
+    setFeedback("此瀏覽器不支援語音合成。", "warning");
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-US";
+  utterance.rate = 0.85;
+  utterance.pitch = 1;
 
   window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
+  window.speechSynthesis.speak(utterance);
+}
+
+function markCurrentAsHard() {
+  if (!currentQuestion || !currentType) {
+    return;
+  }
+
+  const currentWeight = getWeight(currentType, currentQuestion);
+  const newWeight = Math.min(currentWeight + 1, MAX_WEIGHT);
+
+  setWeight(currentType, currentQuestion, newWeight);
+
+  if (newWeight === currentWeight) {
+    setFeedback(`「${currentQuestion.base}」已是最高弱點權重 ${MAX_WEIGHT}。`, "warning");
+  } else {
+    setFeedback(`已標記「${currentQuestion.base}」為弱點，權重：${newWeight}。`, "warning");
+  }
+}
+
+function markCurrentAsEasy() {
+  if (!currentQuestion || !currentType) {
+    return;
+  }
+
+  const currentWeight = getWeight(currentType, currentQuestion);
+  const newWeight = Math.max(currentWeight - 1, 1);
+
+  setWeight(currentType, currentQuestion, newWeight);
+
+  if (newWeight === 1) {
+    setFeedback(`「${currentQuestion.base}」已恢復為一般權重。`, "success");
+  } else {
+    setFeedback(`「${currentQuestion.base}」弱點權重降為 ${newWeight}。`, "success");
+  }
+}
+
+function resetWeaknessData() {
+  const shouldReset = window.confirm("確定要清除所有弱點單字紀錄嗎？");
+
+  if (!shouldReset) {
+    return;
+  }
+
+  weaknessData = {};
+  saveWeaknessData();
+  updateWeakStatus();
+  setFeedback("所有弱點單字紀錄已清除。", "success");
+}
+
+function handleOptionChange() {
+  resetLearningRound(true);
+  nextQuestion();
+}
+
+function bindEvents() {
+  document.getElementById("btnSpeakBase").addEventListener("click", speakBase);
+  document.getElementById("btnShowForms").addEventListener("click", showForms);
+  document.getElementById("btnNext").addEventListener("click", nextQuestion);
+  document.getElementById("btnMarkHard").addEventListener("click", markCurrentAsHard);
+  document.getElementById("btnMarkEasy").addEventListener("click", markCurrentAsEasy);
+  document.getElementById("btnResetWeak").addEventListener("click", resetWeaknessData);
+
+  Object.values(checkboxMap).forEach((checkboxId) => {
+    document.getElementById(checkboxId).addEventListener("change", handleOptionChange);
+  });
 }
 
 window.addEventListener("load", () => {
-  const btnSpeakBase = document.getElementById("btnSpeakBase");
-  const btnShowForms = document.getElementById("btnShowForms");
-  const btnNext = document.getElementById("btnNext");
-
-  if (btnSpeakBase) btnSpeakBase.addEventListener("click", speakBase);
-  if (btnShowForms) btnShowForms.addEventListener("click", showForms);
-  if (btnNext) btnNext.addEventListener("click", nextWord);
-
-  const optAAA = document.getElementById("optAAA");
-  const optABA = document.getElementById("optABA");
-  const optABB = document.getElementById("optABB");
-  const optComparatives = document.getElementById("optComparatives");
-
-  if (optAAA) optAAA.addEventListener("change", nextWord);
-  if (optABA) optABA.addEventListener("change", nextWord);
-  if (optABB) optABB.addEventListener("change", nextWord);
-  if (optComparatives) optComparatives.addEventListener("change", nextWord);
-
-  nextWord();
+  bindEvents();
+  updateWeakStatus();
+  resetLearningRound();
+  nextQuestion();
 });

@@ -16,27 +16,55 @@
 </head>
 <body>
   <h1>三態與比較級練習</h1>
+
   <div class="subtitle">
-    勾選 AAA／ABA／ABB／比較級四種題目範圍，每次隨機顯示一個原形，
-    按「確認發音(原形)」聽原形，按「顯示三態／比較級」看完整變化，再按「下一題」換題目。
+    勾選 AAA／ABA／ABB／ABC(1)／比較級五種題目範圍，每次顯示一個原形。
+    按「確認發音(原形)」聽原形，按「顯示三態／比較級」查看完整變化，再按「下一題」換題目。
   </div>
 
   <div class="card">
+    <div class="progress-row">
+      <span id="roundStatus">準備開始</span>
+      <span id="weakStatus">弱點題：0</span>
+    </div>
+
     <div id="wordBase" class="word-base">—</div>
+
     <div id="wordMeaning" class="word-meaning">
       請勾選題目範圍後，按「下一題」開始練習。
     </div>
 
-    <div id="forms" class="forms"></div>
+    <div id="forms" class="forms" aria-live="polite"></div>
 
     <div class="buttons">
-      <!-- 第一個按鈕：確認發音(原形) -->
-      <button class="btn-primary" id="btnSpeakBase">確認發音(原形)</button>
-      <!-- 第二個按鈕：顯示三態 / 比較級 -->
-      <button class="btn-secondary" id="btnShowForms">顯示三態／比較級</button>
-      <!-- 第三個按鈕：下一題 -->
-      <button class="btn-outline" id="btnNext">下一題</button>
+      <button class="btn-primary" id="btnSpeakBase" type="button">
+        確認發音(原形)
+      </button>
+
+      <button class="btn-secondary" id="btnShowForms" type="button">
+        顯示三態／比較級
+      </button>
+
+      <button class="btn-outline" id="btnNext" type="button">
+        下一題
+      </button>
     </div>
+
+    <div class="buttons secondary-buttons">
+      <button class="btn-warning" id="btnMarkHard" type="button">
+        標記弱點
+      </button>
+
+      <button class="btn-light" id="btnMarkEasy" type="button">
+        已熟悉
+      </button>
+
+      <button class="btn-danger" id="btnResetWeak" type="button">
+        重設弱點
+      </button>
+    </div>
+
+    <div id="feedback" class="feedback" aria-live="polite"></div>
 
     <div class="options">
       <label class="option-item">
@@ -46,12 +74,17 @@
 
       <label class="option-item">
         <input type="checkbox" id="optABA" checked />
-        ABA 原型與過去分詞同型（come–came–come）
+        ABA 原形與過去分詞同型（come–came–come）
       </label>
 
       <label class="option-item">
         <input type="checkbox" id="optABB" checked />
         ABB 過去式與過去分詞同型（build–built–built）
+      </label>
+
+      <label class="option-item">
+        <input type="checkbox" id="optABC1" checked />
+        ABC(1) 三態皆不同（begin–began–begun）
       </label>
 
       <label class="option-item">
@@ -61,9 +94,15 @@
     </div>
 
     <div class="info">
-      小提示：<br />
-      勾選哪一類，就會從該類題庫隨機出題。<br />
-      之後我們可以在這個版本上加「弱點單字權重」，讓你常錯的單字多出現。
+      <p>
+        第一輪會讓所有已勾選的題目各出現一次，而且不會重複。
+      </p>
+      <p>
+        完成第一輪後，系統進入複習模式；被標記為弱點的題目會依權重提高出現機率。
+      </p>
+      <p>
+        「標記弱點」會讓目前題目權重 +1，最高為 5；「已熟悉」會讓權重 -1。
+      </p>
     </div>
   </div>
 </body>
