@@ -1,4 +1,4 @@
-const STORAGE_KEY = "verb-practice-weakness-v1";
+const STORAGE_KEY = "verb-practice-weakness-v2";
 const MAX_WEIGHT = 5;
 const RECENT_LIMIT = 3;
 
@@ -75,25 +75,35 @@ const abc1Verbs = [
   { base: "drive", past: "drove", pp: "driven", zh: "駕駛" },
   { base: "eat", past: "ate", pp: "eaten", zh: "吃" },
   { base: "fall", past: "fell", pp: "fallen", zh: "跌倒；落下" },
-  { base: "fly", past: "flew", pp: "flown", zh: "飛" },
-  { base: "forget", past: "forgot", pp: "forgotten", zh: "忘記" },
+  { base: "fly", past: "flew", pp: "flown", zh: "飛" }
+];
+
+// ABC(2)：Base、Past、PP 都不同
+const abc2Verbs = [
+  { base: "forget", past: "forgot", pp: "forgot / forgotten", speakPp: "forgotten", zh: "忘記" },
   { base: "forgive", past: "forgave", pp: "forgiven", zh: "原諒" },
   { base: "freeze", past: "froze", pp: "frozen", zh: "結冰" },
+  { base: "get", past: "got", pp: "got / gotten", speakPp: "got, gotten", zh: "獲得；得到" },
   { base: "give", past: "gave", pp: "given", zh: "給" },
   { base: "go", past: "went", pp: "gone", zh: "去" },
   { base: "grow", past: "grew", pp: "grown", zh: "成長；種植" },
+  { base: "hide", past: "hid", pp: "hidden", zh: "躲藏；藏起來" },
   { base: "know", past: "knew", pp: "known", zh: "知道；認識" },
-  { base: "ride", past: "rode", pp: "ridden", zh: "騎" },
-  { base: "ring", past: "rang", pp: "rung", zh: "響鈴；打電話" },
-  { base: "rise", past: "rose", pp: "risen", zh: "上升；起床" },
-  { base: "see", past: "saw", pp: "seen", zh: "看見" },
+  { base: "lie", past: "lay", pp: "lain", zh: "躺著" },
+  { base: "ride", past: "rode", pp: "ridden", zh: "騎乘" },
+  { base: "ring", past: "rang", pp: "rung", zh: "鈴響；打電話" },
+  { base: "rise", past: "rose", pp: "risen", zh: "升起；起床" },
+  { base: "see", past: "saw", pp: "seen", zh: "看到" },
+  { base: "shake", past: "shook", pp: "shaken", zh: "搖；搖動" },
+  { base: "show", past: "showed", pp: "shown", zh: "展示；顯示" },
   { base: "sing", past: "sang", pp: "sung", zh: "唱歌" },
-  { base: "speak", past: "spoke", pp: "spoken", zh: "說話" },
+  { base: "speak", past: "spoke", pp: "spoken", zh: "說；說話" },
   { base: "steal", past: "stole", pp: "stolen", zh: "偷" },
   { base: "swim", past: "swam", pp: "swum", zh: "游泳" },
-  { base: "take", past: "took", pp: "taken", zh: "拿；帶" },
-  { base: "throw", past: "threw", pp: "thrown", zh: "丟；投擲" },
-  { base: "wear", past: "wore", pp: "worn", zh: "穿著" },
+  { base: "take", past: "took", pp: "taken", zh: "帶（往）；拿" },
+  { base: "throw", past: "threw", pp: "thrown", zh: "投；丟" },
+  { base: "wake", past: "woke", pp: "woken", zh: "醒來；叫醒" },
+  { base: "wear", past: "wore", pp: "worn", zh: "穿戴" },
   { base: "write", past: "wrote", pp: "written", zh: "寫" }
 ];
 
@@ -114,6 +124,7 @@ const questionBanks = {
   aba: abaVerbs,
   abb: abbVerbs,
   abc1: abc1Verbs,
+  abc2: abc2Verbs,
   comp: comparatives
 };
 
@@ -122,6 +133,7 @@ const checkboxMap = {
   aba: "optABA",
   abb: "optABB",
   abc1: "optABC1",
+  abc2: "optABC2",
   comp: "optComparatives"
 };
 
@@ -417,7 +429,8 @@ function showForms() {
     <span><strong>過去分詞</strong>：${currentQuestion.pp}</span>
   `;
 
-  speakText(`${currentQuestion.base}, ${currentQuestion.past}, ${currentQuestion.pp}`);
+  const spokenPp = currentQuestion.speakPp || currentQuestion.pp;
+  speakText(`${currentQuestion.base}, ${currentQuestion.past}, ${spokenPp}`);
 }
 
 function speakBase() {
